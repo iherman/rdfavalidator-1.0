@@ -1,0 +1,9 @@
+Metadata-Version: 1.0
+Name: pyRdfa3
+Version: 1.0
+Summary: RDFa 1.1 validator
+Author: Ivan Herman
+Author-email: ivan@w3.org
+License: W3C© SOFTWARE NOTICE AND LICENSE
+Description: RDFa validator, a think layer on top of the RDFa 1.1 parser
+Platform: any
