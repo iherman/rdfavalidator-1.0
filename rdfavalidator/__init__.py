@@ -60,7 +60,7 @@ except :
 	else :
 		from rdflib.Graph import Graph
 
-import xml.dom.minidom
+import html5lib
 
 from rdfavalidator.html	   import html_page
 from rdfavalidator.errors  import Errors
@@ -102,7 +102,10 @@ class Validator :
 		self.vocab_expansion = vocab_expansion
 		
 		# Get the DOM tree that will be the scaffold for the output
-		self.domtree = xml.dom.minidom.parse(StringIO(html_page % date.today().isoformat()))
+		parser = html5lib.HTMLParser(tree=html5lib.treebuilders.getTreeBuilder("dom"))
+		self.domtree = parser.parse(html_page % date.today().isoformat())
+
+
 		# find the warning/error content
 		for div in self.domtree.getElementsByTagName("div") :
 			if div.hasAttribute("id") and div.getAttribute("id") == "Message" :
@@ -142,14 +145,14 @@ class Validator :
 		"""
 		# Add the RDF code in the DOM tree
 		outp = self.default_graph.serialize(format="turtle")
-		try :
-			# This will fail on Python 3!
+		if PY3 :
+			u = str(outp, encoding='utf-8')
+		else :
 			u = unicode(outp.decode('utf-8'))
-		except :
-			u = outp
 
 		dstr = self.domtree.createTextNode(u)
 		self.code.appendChild(dstr)
+
 		# Settle the error message
 		self.errors.interpret()
 				
@@ -159,7 +162,11 @@ class Validator :
 		"""
 		self.parse()
 		self.complete_DOM()
-		return self.domtree.toxml(encoding="utf-8")
+		if PY3 :
+			from html5lib.serializer import serialize
+			return serialize(self.domtree,tree='dom')
+		else :
+			return str(self.domtree.toxml(encoding="utf-8"))
 
 def validateURI(uri, form={}) :
 	"""The standard processing of an RDFa uri options in a form, ie, as an entry point from a CGI call. For compatibility
@@ -240,11 +247,17 @@ def validateURI(uri, form={}) :
 		print( "<h1>Validator request details</h1>" )
 		print( "<dl>" )
 		if uri == "text:" and "text" in form and form["text"].value != None and len(form["text"].value.strip()) != 0 :
-			print( "<dt>Text input:</dt><dd>%s</dd>" % cgi.escape(form["text"].value).replace('\n','<br/>') )
+			if PY3 :
+				print( "<dt>Text input:</dt><dd>%s</dd>" % form["text"].value.replace('\n','<br/>') )
+			else :
+				print( "<dt>Text input:</dt><dd>%s</dd>" % cgi.escape(form["text"].value).replace('\n','<br/>') )
 		elif uri == "uploaded:" :
 			print( "<dt>Uploaded file</dt>" )
 		else :
-			print( "<dt>URI received:</dt><dd><code>'%s'</code></dd>" % cgi.escape(uri) )
+			if PY3 :
+				print("<dt>URI received:</dt><dd><code>'%s'</code></dd>" % uri)
+			else :
+				print( "<dt>URI received:</dt><dd><code>'%s'</code></dd>" % cgi.escape(uri) )
 		if "host_language" in form.keys() :
 			print( "<dt>Media Type:</dt><dd>%s</dd>" % media_type )
 		print( "</dl>" )

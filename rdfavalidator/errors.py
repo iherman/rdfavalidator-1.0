@@ -33,6 +33,9 @@ from pyRdfa 		import ns_rdfa, ns_xsd, ns_distill
 from pyRdfa 		import RDFA_Error, RDFA_Warning, RDFA_Info
 from pyRdfa.options	import ns_dc, ns_ht
 
+import sys
+PY3 = (sys.version_info[0] >= 3)
+
 class Errors :
 	"""
 	Shell to generate error and warning messages to the output
@@ -160,7 +163,11 @@ class Errors :
 			for (x,y,date) in self.error_graph.triples((subj, ns_dc["date"], None)) :
 				break
 			to_sort.append((subj,date))
-		to_sort.sort(cmp = lambda x,y : cmp(x[1],y[1]))
+
+		if PY3 :
+			to_sort.sort(key = lambda x: x[1]) 
+		else :
+			to_sort.sort(cmp = lambda x,y : cmp(x[1],y[1]))
 		return [subj for (subj,obj) in to_sort]
 		
 	def interpret(self) :

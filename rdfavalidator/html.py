@@ -14,12 +14,12 @@ U{W3C® SOFTWARE NOTICE AND LICENSE<href="http://www.w3.org/Consortium/Legal/200
 $Id: html.py,v 1.4 2011-11-15 11:56:43 ivan Exp $ $Date: 2011-11-15 11:56:43 $
 """
 
-html_page = """<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01+RDFa 1.1//EN" "http://www.w3.org/MarkUp/DTD/html401-rdfa11-1.dtd">
-<html>
+html_page = """
+<!DOCTYPE html>
+<html lang="en">
   <head>
-	<title>RDFa 1.1 Validator (Test Version for pyRdfa 3.X)</title>
-	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta charset="utf-8">
+	<title>RDFa 1.1 Validator results</title>
 	<link rel="icon" type="image/png" href="/2001/sw/favicon-sw.png" />
 	<link rel="meta" type="application/rdf+xml" title="FOAF" href="http://www.ivan-herman.net/foaf.rdf" />
 	<meta name="Author" content="Ivan Herman, Semantic Web Activity Lead, W3C" />
