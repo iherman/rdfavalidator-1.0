@@ -12,9 +12,9 @@ The code's behaviour is:
  - serialize the HTML page as an output to the CGI call
 
 @summary: RDFa validator
-@requires: Python version 2.5 or up
-@requires: U{RDFLib<http://rdflib.net>}; version 3.X is preferred, it has a more readable output serialization.
-@requires: U{pyRdfa<http://www.w3.org/2007/08/pyrdfa/>}, version 3.X (i.e., corresponding to RDFa 1.1)
+@requires: Python version 2.7 or 3.8
+@requires: U{RDFLib<http://rdflib.net>}; version 5.0 or higher
+@requires: U{pyRdfa<http://www.w3.org/2007/08/pyrdfa/>}, version 4.X (i.e., corresponding to RDFa 1.1 and better tested with Python 3.8)
 @organization: U{World Wide Web Consortium<http://www.w3.org>}
 @author: U{Ivan Herman<a href="http://www.w3.org/People/Ivan/">}
 @license: This software is available for use under the
@@ -25,7 +25,7 @@ U{W3C® SOFTWARE NOTICE AND LICENSE<href="http://www.w3.org/Consortium/Legal/200
 $Id: __init__.py,v 1.8 2013-03-18 12:28:28 ivan Exp $ $Date: 2013-03-18 12:28:28 $
 """
 
-__version__ = "1.0"
+__version__ = "2.0"
 __author__  = 'Ivan Herman'
 __contact__ = 'Ivan Herman, ivan@w3.org'
 __license__ = 'W3C® SOFTWARE NOTICE AND LICENSE, http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231'
